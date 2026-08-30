@@ -25,7 +25,7 @@ Presented as "Area Filtering & Connected Components" (with Ali Hussain), this pr
 
 ## Background: connected component labeling
 
-The `docs/notes-connected-components.docx` notes cover the classic two-pass CCL algorithm this project builds on: a first pass assigns provisional labels while recording label equivalences, and a second pass (union-find) resolves those equivalences into final per-blob labels — using 8-connectivity so diagonal pixels count as connected, which is standard for real-world blobs. The notes also cover Otsu's thresholding (finds the split point in the valley of a bimodal brightness histogram) and why area-based filtering after labeling is what makes downstream shape descriptors stable instead of noisy.
+This project builds on the classic two-pass connected-component labeling (CCL) algorithm: a first pass assigns provisional labels while recording label equivalences, and a second pass (union-find) resolves those equivalences into final per-blob labels — using 8-connectivity so diagonal pixels count as connected, which is standard for real-world blobs. The approach also draws on Otsu's thresholding (finds the split point in the valley of a bimodal brightness histogram) and why area-based filtering after labeling is what makes downstream shape descriptors stable instead of noisy.
 
 ## Contents
 
@@ -34,8 +34,6 @@ The `docs/notes-connected-components.docx` notes cover the classic two-pass CCL 
 - `model/orange-workflow.ows` — a parallel classifier built the same dataset in [Orange Data Mining](https://orangedatamining.com/)'s visual workflow tool
 - `model/decision_tree_model.pkcls` — that Orange-trained classifier, exported as a pickle (loadable with Orange installed; `shape_detector.py` expects its own scikit-learn `joblib` bundle trained from the same CSV instead)
 - `images/` — the area-filtering pipeline diagram and a feature-extraction code excerpt
-- `docs/presentation.pptx` — slide deck on the area-filtering and connected-components approach
-- `docs/notes-connected-components.docx` — background notes on CCL, thresholding/Otsu, morphology, and camera/measurement fundamentals
 
 ## Notes
 
