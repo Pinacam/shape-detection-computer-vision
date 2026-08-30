@@ -1,5 +1,7 @@
 # Electronic Component Classifier — OpenCV + Decision Tree (Raspberry Pi)
 
+![Tests](https://github.com/Pinacam/shape-detection-computer-vision/actions/workflows/tests.yml/badge.svg)
+
 A live computer-vision pipeline that watches a camera feed, isolates real objects from background noise, and identifies loose electronic and hardware parts by shape — bolts, nuts, washers, springs, diodes, resistors, ferrite beads, knobs, and wire — reporting each part's area, perimeter, circularity, compactness, and convexity alongside the predicted label, running on a Raspberry Pi with a USB webcam.
 
 ![Pipeline diagram](images/pipeline-diagram.png)
@@ -29,7 +31,9 @@ This project builds on the classic two-pass connected-component labeling (CCL) a
 
 ## Contents
 
-- `src/shape_detector.py` — live USB webcam pipeline: frame capture, thresholding, contour/area filtering, feature extraction, decision-tree prediction, on-screen overlay (press `Q` to quit and save the final annotated frame)
+- `src/shape_detector.py` — live USB webcam pipeline: frame capture, thresholding, contour/area filtering, feature extraction, decision-tree prediction, on-screen overlay (press `Q` to quit and save the final annotated frame); camera/model setup lives behind a `if __name__ == "__main__"` guard so `extract_features()` can be imported and unit tested without a webcam
+- `tests/test_shape_detector.py` — pytest tests for the geometric feature-extraction math (circularity/convexity on synthetic shapes) and a schema check on the training data; runs on every push via GitHub Actions (`.github/workflows/tests.yml`)
+- `requirements.txt` — Python dependencies (opencv-python, numpy, pandas, joblib, scikit-learn)
 - `data/shape_database.csv` — the labeled training data (9 part classes, geometric features)
 - `model/orange-workflow.ows` — a parallel classifier built the same dataset in [Orange Data Mining](https://orangedatamining.com/)'s visual workflow tool
 - `model/decision_tree_model.pkcls` — that Orange-trained classifier, exported as a pickle (loadable with Orange installed; `shape_detector.py` expects its own scikit-learn `joblib` bundle trained from the same CSV instead)
